@@ -34,10 +34,18 @@
       class="fixed top-4 right-4 z-[9999] space-y-2"
     ></div>
 
+    <!--  -->
+    <button
+      id="toggle-sidebar"
+      class="fixed top-2 left-2 z-50 p-2 bg-white border rounded-lg shadow-md sm:hidden"
+    >
+      ☰
+    </button>
+
     <!-- VERTICAL SIDEBAR -->
     <aside
       id="critical-stats-sidebar"
-      class="fixed top-0 left-0 w-32 h-full text-gray-800 bg-white z-40 pt-[60px] border-r border-gray-200"
+      class="fixed top-0 left-0 w-32 h-full text-gray-800 bg-white z-40 border-r border-gray-200 transform -translate-x-full sm:translate-x-0 transition-transform duration-300 overflow-y-auto"
     >
       <div class="p-2 space-y-2">
         <!--  -->
@@ -48,6 +56,19 @@
               id="cash-replacement"
               class="font-semibold md:text-xl"
             ></span>
+            đ</span
+          >
+        </div>
+
+        <!--  -->
+        <div class="stat-group bg-sky-50 border-sky-500">
+          <span class="block text-xs text-sky-500">Dự kiến tổng chi</span>
+          <span class="text-sky-500"
+            ><span
+              id="expectedCash-replacement"
+              class="font-semibold md:text-xl"
+              >0</span
+            >
             đ</span
           >
         </div>
@@ -101,83 +122,56 @@
         </div>
 
         <!--  -->
+        <div class="stat-group bg-stone-50 border-stone-500">
+          <span class="block text-xs text-gray-500">Thời gian</span>
+          <span class="text-stone-500">
+            <span id="time-replacement" class="font-semibold md:text-xl"></span>
+            phút</span
+          >
+        </div>
+
+        <!--  -->
+        <div class="stat-group bg-sky-50 border-sky-500">
+          <span class="block text-xs text-sky-500">Số dân khỏe mạnh</span>
+          <span class="text-sky-500"
+            ><span
+              id="numHealth-replacement"
+              class="font-semibold md:text-xl"
+            ></span>
+            ng</span
+          >
+        </div>
+
+        <!--  -->
+        <div class="stat-group bg-red-50 border-red-500">
+          <span class="block text-xs text-red-500">Ca Nhiễm</span>
+          <span class="text-red-500">
+            <span
+              id="numCase-replacement"
+              class="font-semibold md:text-xl"
+            ></span>
+            ng</span
+          >
+        </div>
+
+        <!--  -->
+        <div class="stat-group bg-slate-50 border-slate-500">
+          <span class="block text-xs text-slate-500">Tử vong</span>
+          <span class="text-slate-500"
+            ><span
+              id="numDeath-replacement"
+              class="font-semibold md:text-xl"
+            ></span>
+            ng</span
+          >
+        </div>
+
+        <!--  -->
       </div>
     </aside>
 
-    <!-- HORIZONTAL NAVBARs -->
-    <nav
-      class="fixed top-0 left-32 w-[calc(100%-8rem)] bg-white text-gray-800 z-50 shadow-xl border-b-4 border-blue-700/80"
-    >
-      <div class="max-w-7xl mx-auto p-2 lg:p-3 font-medium">
-        <div class="grid grid-cols-5 gap-3 lg:gap-4">
-          <!--  -->
-          <div class="stat-group bg-stone-50 border-stone-500">
-            <span class="block text-xs text-gray-500">Thời gian</span>
-            <span class="text-stone-500">
-              <span
-                id="time-replacement"
-                class="font-semibold md:text-xl"
-              ></span>
-              phút</span
-            >
-          </div>
-
-          <!--  -->
-          <div class="stat-group bg-sky-50 border-sky-500">
-            <span class="block text-xs text-sky-500">Số dân khỏe mạnh</span>
-            <span class="text-sky-500"
-              ><span
-                id="numHealth-replacement"
-                class="font-semibold md:text-xl"
-              ></span>
-              ng</span
-            >
-          </div>
-
-          <!--  -->
-          <div class="stat-group bg-red-50 border-red-500">
-            <span class="block text-xs text-red-500">Ca Nhiễm</span>
-            <span class="text-red-500">
-              <span
-                id="numCase-replacement"
-                class="font-semibold md:text-xl"
-              ></span>
-              ng</span
-            >
-          </div>
-
-          <!--  -->
-          <div class="stat-group bg-slate-50 border-slate-500">
-            <span class="block text-xs text-slate-500">Tử vong</span>
-            <span class="text-slate-500"
-              ><span
-                id="numDeath-replacement"
-                class="font-semibold md:text-xl"
-              ></span>
-              ng</span
-            >
-          </div>
-
-          <!--  -->
-          <div class="stat-group bg-sky-50 border-sky-500">
-            <span class="block text-xs text-sky-500">Dự kiến tổng chi</span>
-            <span class="text-sky-500"
-              ><span
-                id="expectedCash-replacement"
-                class="font-semibold md:text-xl"
-                >0</span
-              >
-              đ</span
-            >
-          </div>
-
-          <!--  -->
-        </div>
-      </div>
-    </nav>
-
     <div
-      class="ml-32 mt-[60px] p-4 w-[calc(100%-8rem)] min-h-[calc(100vh-60px)]"
+      class="ml-0 sm:ml-32 mt-[60px] p-4 w-full sm:w-[calc(100%-8rem)] min-h-[calc(100vh-60px)] transition-all duration-300"
     >
       <h1 class="text-3xl font-bold text-blue-700 my-4 text-center">
         TRUNG TÂM ĐẦU TƯ QUỐC GIA
@@ -580,5 +574,15 @@
         </div>
       </div>
     </div>
+    <script>
+      const toggleBtn = document.getElementById("toggle-sidebar");
+      const sidebar = document.getElementById("critical-stats-sidebar");
+      const navbar = document.getElementById("critical-stats-navbar");
+
+      toggleBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("-translate-x-full");
+        navbar.classList.toggle("-translate-x-full");
+      });
+    </script>
   </body>
 </html>

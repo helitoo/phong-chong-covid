@@ -24,39 +24,12 @@
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
 }
 
-/* === Button Primary === */
-.btn-primary {
-  background-color: #2563eb;
-  color: #ffffff;
-  font-weight: 700;
-  padding: 0.75rem 2rem;
-  border-radius: 0.75rem;
-  transition: all 0.2s ease-in-out;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transform: scale(1);
-  cursor: pointer;
-}
-
-.btn-primary:hover {
-  background-color: #1d4ed8;
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-  transform: scale(1.01);
-}
-
-.btn-primary:disabled {
-  background-color: #9ca3af;
-  box-shadow: none;
-  transform: none;
-  cursor: not-allowed;
-}
-
 /* === Stat Group === */
 .stat-group {
   padding: 0.2rem;
   transition: all 0.2s ease-in-out;
   display: flex;
   flex-direction: column;
-  height: 100%;
   border-left-width: 4px;
   border-left-style: solid;
   border-left-color: #e5e7eb;
