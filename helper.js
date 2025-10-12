@@ -94,6 +94,7 @@ export function drawChart(data, canvasId, chartInstance) {
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       scales: {
         x: {
           type: "linear",

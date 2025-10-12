@@ -45,7 +45,7 @@
     <!-- VERTICAL SIDEBAR -->
     <aside
       id="critical-stats-sidebar"
-      class="fixed top-0 left-0 w-32 h-full text-gray-800 bg-white z-40 border-r border-gray-200 transform -translate-x-full sm:translate-x-0 transition-transform duration-300 overflow-y-auto"
+      class="fixed top-0 left-0 w-32 h-full text-gray-800 bg-white z-40 pt-[60px] border-r border-gray-200 transform -translate-x-full sm:translate-x-0 transition-transform duration-300 overflow-y-auto"
     >
       <div class="p-2 space-y-2">
         <!--  -->
@@ -561,14 +561,14 @@
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
         <!--  -->
         <div class="card bg-white">
-          <div class="chart-container">
+          <div style="position: relative; height: 400px">
             <canvas id="total-chart"></canvas>
           </div>
         </div>
 
         <!--  -->
         <div class="card bg-white">
-          <div class="chart-container">
+          <div style="position: relative; height: 400px">
             <canvas id="local-chart"></canvas>
           </div>
         </div>
