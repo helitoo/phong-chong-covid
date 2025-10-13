@@ -190,7 +190,7 @@ function updateTurn(stopTimer) {
   let turnTime =
     ((otherData.numHealth + otherData.credit) / 200) *
       (viewportWidth >= 768 ? 20 : 30) +
-    randInt(0, 2);
+    randInt(2, 5);
 
   if (turnTime < 1 || otherData.numHealth <= 5 || otherData.credit <= 5) {
     callToast("Bạn đã THẤT BẠI!", "danger");

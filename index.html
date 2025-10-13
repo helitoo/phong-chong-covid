@@ -34,10 +34,34 @@
       class="fixed top-4 left-1/2 -translate-x-1/2 z-[9999] space-y-2"
     ></div>
 
+    <!-- Shortcuts  -->
+    <div class="fixed top-20 right-2 z-50 flex flex-col space-y-2">
+      <button
+        class="bg-white/50 backdrop-blur-md p-2 border rounded-full shadow text-gray-600"
+      >
+        <a href="#mua-vaccine-header">💉</a>
+      </button>
+      <button
+        class="bg-white/50 backdrop-blur-md p-2 border rounded-full shadow text-gray-600"
+      >
+        <a href="#dau-tu-header">💰</a>
+      </button>
+      <button
+        class="bg-white/50 backdrop-blur-md p-2 border rounded-full shadow text-gray-600"
+      >
+        <a href="#phan-phoi-header">🗺️</a>
+      </button>
+      <button
+        class="bg-white/50 backdrop-blur-md p-2 border rounded-full shadow text-gray-600"
+      >
+        <a href="#chart-header">📈</a>
+      </button>
+    </div>
+
     <!--  -->
     <button
       id="toggle-guidebook"
-      class="fixed top-2 right-2 z-50 p-2 bg-white border rounded-lg shadow text-gray-600"
+      class="bg-white/50 backdrop-blur-md fixed top-2 right-2 z-50 p-2 bg-white border rounded-lg shadow text-gray-600"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -101,7 +125,7 @@
     <!--  -->
     <button
       id="toggle-sidebar"
-      class="fixed top-2 left-2 z-50 p-2 bg-white border rounded-lg shadow-md sm:hidden text-gray-600"
+      class="bg-white/50 backdrop-blur-md fixed top-2 left-2 z-50 p-2 bg-white border rounded-lg shadow-md sm:hidden text-gray-600"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -119,7 +143,7 @@
 
     <aside
       id="critical-stats-sidebar"
-      class="fixed top-0 left-0 w-32 h-full text-gray-800 bg-white/50 backdrop-blur-md z-40 pt-[60px] border-r border-gray-200 transform -translate-x-full sm:translate-x-0 transition-transform duration-300 overflow-y-auto"
+      class="bg-white/50 backdrop-blur-md fixed top-0 left-0 w-32 h-full text-gray-800 z-40 pt-[60px] md:pt-0 border-r border-gray-200 transform -translate-x-full sm:translate-x-0 transition-transform duration-300 overflow-y-auto"
     >
       <div class="p-2 space-y-2">
         <!--  -->
@@ -254,405 +278,341 @@
     </aside>
 
     <div
-      class="ml-0 sm:ml-32 mt-[60px] p-4 w-full sm:w-[calc(100%-8rem)] min-h-[calc(100vh-60px)] transition-all duration-300"
+      class="ml-0 sm:ml-32 p-4 w-full sm:w-[calc(100%-8rem)] min-h-[calc(100vh-60px)] transition-all duration-300"
     >
-      <h1 class="text-3xl font-bold text-blue-700 my-4 text-center">
+      <h1 class="text-3xl font-bold text-blue-700 my-1 text-center">
         TRUNG TÂM ĐẦU TƯ QUỐC GIA
       </h1>
 
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        <!-- MUA VACCINE TỪ NƯỚC NGOÀI -->
-        <div
-          class="card bg-gray-50 border border-gray-200 rounded-xl shadow-lg p-6 mx-auto lg:mx-0 lg:max-w-none w-full lg:col-span-1"
-        >
-          <div class="flex items-center mb-5 border-b border-blue-300 pb-3">
-            <h3 class="text-2xl font-bold text-blue-800">
-              Mua vaccine từ nước ngoài
-            </h3>
-            <span class="text-4xl text-gray-500 ml-auto">💉</span>
-          </div>
-          <div class="space-y-4">
+      <div class="flex flex-col min-h-screen overflow-hidden">
+        <!-- HÀNG 1: MUA + ĐẦU TƯ -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-none">
+          <!-- MUA VACCINE -->
+          <div
+            class="bg-gray-50 border border-gray-200 rounded-lg shadow p-4 flex flex-col justify-between"
+          >
             <div>
-              <label
-                for="purchase-vaccine"
-                class="block text-sm font-medium text-gray-700 mb-1"
+              <div class="flex items-center border-b border-blue-300 pb-2 mb-3">
+                <h3
+                  class="text-xl font-bold text-blue-800"
+                  id="mua-vaccine-header"
+                >
+                  Mua vaccine
+                </h3>
+                <span class="text-3xl ml-auto">💉</span>
+              </div>
+              <label class="text-sm font-medium text-gray-700 mb-1 block"
+                >Số lượng mua (liều)</label
               >
-                Số lượng mua (liều)
-              </label>
               <input
                 type="number"
                 id="purchase-vaccine"
                 min="0"
                 value="0"
-                placeholder="Nhập số lượng"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out text-lg font-semibold text-gray-800"
+                class="w-full px-3 py-1.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 text-base font-semibold"
               />
-            </div>
-            <div class="text-base text-gray-700 py-2 border-t border-gray-200">
-              <ul>
+              <ul class="text-sm text-gray-700 mt-3 space-y-1">
                 <li>
-                  Giá hiện tại:
-                  <strong id="globalVaccinePrice-replacement"></strong>đ / 💉.
+                  Giá: <strong id="globalVaccinePrice-replacement"></strong>đ /
+                  💉
                 </li>
                 <li>
-                  Số vaccine thế giới hiện có:
-                  <strong id="numGlobalVaccine-replacement"></strong>💉.
+                  Có sẵn: <strong id="numGlobalVaccine-replacement"></strong>💉
                 </li>
               </ul>
             </div>
-          </div>
-          <div class="mt-6">
             <button
               id="buy-vaccine-btn"
-              class="w-full bg-blue-600 text-white text-lg font-bold p-3 rounded-xl shadow-md hover:bg-blue-700 transition duration-200 ease-in-out transform hover:scale-[1.01] focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-opacity-50"
+              class="mt-3 bg-blue-600 text-white font-bold py-2 rounded-lg hover:bg-blue-700 transition transform hover:scale-[1.02]"
             >
               MUA
             </button>
           </div>
-        </div>
 
-        <!-- ĐẦU TƯ XÃ HỘI & KHOA HỌC -->
-        <div
-          class="card bg-gray-50 border border-gray-200 rounded-xl shadow-lg p-6 mx-auto lg:mx-0 lg:max-w-none w-full lg:col-span-2"
-        >
-          <div class="flex items-center mb-5 border-b border-purple-300 pb-3">
-            <h3 class="text-2xl font-bold text-purple-800">Đầu tư khác</h3>
-            <span class="text-4xl text-gray-500 ml-auto font-semibold">💰</span>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
-            <div
-              class="p-4 bg-white rounded-xl border border-purple-200 shadow-sm transition hover:shadow-md"
-            >
-              <label
-                for="social-investment"
-                class="block font-bold text-gray-800 flex items-center mb-2"
+          <!-- ĐẦU TƯ -->
+          <div
+            class="lg:col-span-2 bg-gray-50 border border-gray-200 rounded-lg shadow p-4 flex flex-col justify-between"
+          >
+            <div>
+              <div
+                class="flex items-center border-b border-purple-300 pb-2 mb-3"
               >
-                <span class="text-xl mr-2">🏛️</span> Đầu tư xã hội
-              </label>
-              <input
-                type="number"
-                id="social-investment"
-                min="0"
-                value="0"
-                placeholder="Số tiền (đ)"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-150 ease-in-out text-lg font-semibold text-gray-800"
-              />
+                <h3
+                  class="text-xl font-bold text-purple-800"
+                  id="dau-tu-header"
+                >
+                  Đầu tư
+                </h3>
+                <span class="text-3xl ml-auto">💰</span>
+              </div>
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label
+                    class="font-bold text-gray-800 text-sm flex items-center mb-1"
+                    ><span class="mr-2">🏛️</span> Xã hội</label
+                  >
+                  <input
+                    type="number"
+                    id="social-investment"
+                    min="0"
+                    value="0"
+                    class="w-full px-3 py-1.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 text-base font-semibold"
+                  />
+                </div>
+                <div>
+                  <label
+                    class="font-bold text-gray-800 text-sm flex items-center mb-1"
+                    ><span class="mr-2">🧑‍🔬</span> Khoa học</label
+                  >
+                  <input
+                    type="number"
+                    id="science-investment"
+                    min="0"
+                    value="0"
+                    class="w-full px-3 py-1.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-purple-500 text-base font-semibold"
+                  />
+                </div>
+              </div>
             </div>
-
-            <div
-              class="p-4 bg-white rounded-xl border border-purple-200 shadow-sm transition hover:shadow-md"
-            >
-              <label
-                for="science-investment"
-                class="block font-bold text-gray-800 flex items-center mb-2"
-              >
-                <span class="text-xl mr-2">🧑‍🔬</span> Đầu tư khoa học
-              </label>
-              <input
-                type="number"
-                id="science-investment"
-                min="0"
-                value="0"
-                placeholder="Số tiền (đ)"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-150 ease-in-out text-lg font-semibold text-gray-800"
-              />
-            </div>
-          </div>
-
-          <div class="mt-4">
             <button
               id="invest-btn"
-              class="w-full bg-purple-600 text-white text-lg font-bold p-3 rounded-xl shadow-md hover:bg-purple-700 transition duration-200 ease-in-out transform hover:scale-[1.01] focus:outline-none focus:ring-4 focus:ring-purple-300 focus:ring-opacity-50"
+              class="mt-3 bg-purple-600 text-white font-bold py-2 rounded-lg hover:bg-purple-700 transition transform hover:scale-[1.02]"
             >
               ĐẦU TƯ
             </button>
           </div>
         </div>
-      </div>
 
-      <!-- PHÂN PHỐI VACCINE -->
-
-      <div
-        class="card bg-gray-50 border border-gray-200 rounded-xl shadow-lg p-6 w-full lg:max-w-none"
-      >
-        <div class="flex items-center mb-5 border-b border-red-300 pb-3">
-          <h3 class="text-2xl font-bold text-red-800">Phân phối vaccine</h3>
-          <span class="text-3xl text-gray-500 ml-auto font-semibold">🗺️</span>
-        </div>
-        <!--  -->
-        <div class="block w-full">
-          <label class="block text-sm font-medium text-gray-700 mb-1">
-            Giá bán mỗi vaccine
-          </label>
-          <input
-            type="number"
-            min="0"
-            value="0"
-            placeholder="Nhập giá tiền"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out text-lg font-semibold text-gray-800"
-          />
-        </div>
-
-        <!--  -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-2">
-          <!--  -->
+        <!-- HÀNG 2: PHÂN PHỐI -->
+        <div
+          class="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4 overflow-hidden"
+        >
+          <!-- FORM PHÂN PHỐI -->
           <div
-            class="p-4 bg-white rounded-xl border border-red-200 shadow-sm transition hover:shadow-md"
+            class="bg-gray-50 border border-gray-200 rounded-lg shadow p-4 overflow-y-auto"
           >
-            <div class="block font-bold text-gray-800 flex items-center mb-2">
-              <span class="text-xl mr-2 text-red-600">📍</span> Thủ đô
-            </div>
-            <div class="text-sm text-gray-700">
-              <p>
-                Cần:
-                <strong
-                  id="province1-numCase-replacement"
-                  class="text-red-600"
-                ></strong>
-                liều.
-              </p>
-              <p>
-                Dân số:
-                <strong
-                  id="province1-population-replacement"
-                  class="text-red-600"
-                ></strong>
-                người.
-              </p>
+            <div class="flex items-center border-b border-red-300 pb-2 mb-3">
+              <h3 class="text-xl font-bold text-red-800" id="phan-phoi-header">
+                Phân phối vaccine
+              </h3>
+              <span class="text-2xl ml-auto">🗺️</span>
             </div>
 
-            <label
-              for="province1-numLocalVaccine"
-              class="block text-xs font-medium text-gray-600 mb-1 mt-3"
+            <label class="text-sm font-medium text-gray-700 mb-1 block"
+              >Giá bán mỗi vaccine</label
             >
-              Số liều dự định phân phối:
-            </label>
             <input
               type="number"
-              id="province1-numLocalVaccine"
               min="0"
               value="0"
-              placeholder="Nhập số lượng"
-              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition duration-150 ease-in-out text-gray-800"
+              class="w-full px-3 py-1.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 mb-3 text-base font-semibold"
             />
 
-            <label
-              for="province1-lockdownLevel"
-              class="block text-xs font-medium text-gray-600 mb-1 mt-3"
+            <div class="grid grid-cols-2 gap-2 text-sm">
+              <!-- 4 tỉnh -->
+              <template id="province-template">
+                <div
+                  class="p-3 bg-white border border-red-200 rounded-lg shadow-sm"
+                >
+                  <div class="font-bold text-gray-800 mb-1">
+                    <span class="text-red-600 mr-1">📍</span
+                    ><span class="province-name"></span>
+                  </div>
+                  <p>
+                    Cần:
+                    <strong class="text-red-600 province-need"></strong> liều
+                  </p>
+                  <p>
+                    Dân: <strong class="text-red-600 province-pop"></strong>
+                  </p>
+                  <label class="block text-xs mt-2">Phân phối:</label>
+                  <input
+                    type="number"
+                    class="w-full border border-gray-300 rounded-md px-2 py-1 text-sm focus:ring-1 focus:ring-red-500"
+                  />
+                  <label class="block text-xs mt-2">Cách ly:</label>
+                  <select
+                    class="w-full border border-gray-300 rounded-md px-2 py-1 text-sm focus:ring-1 focus:ring-red-500"
+                  >
+                    <option>0</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                  </select>
+                </div>
+              </template>
+
+              <!-- Các tỉnh cụ thể -->
+              <div
+                class="p-3 bg-white border border-red-200 rounded-lg shadow-sm"
+              >
+                <div class="font-bold text-gray-800 mb-1">
+                  <span class="text-red-600 mr-1">📍</span>Thủ đô
+                </div>
+                <p>
+                  Cần:
+                  <strong
+                    id="province1-numCase-replacement"
+                    class="text-red-600"
+                  ></strong>
+                  liều
+                </p>
+                <p>
+                  Dân:
+                  <strong
+                    id="province1-population-replacement"
+                    class="text-red-600"
+                  ></strong>
+                </p>
+                <label class="block text-xs mt-2">Phân phối:</label>
+                <input
+                  type="number"
+                  id="province1-numLocalVaccine"
+                  class="w-full border border-gray-300 rounded-md px-2 py-1 text-sm focus:ring-1 focus:ring-red-500"
+                />
+                <label class="block text-xs mt-2">Cách ly:</label>
+                <select
+                  id="province1-lockdownLevel"
+                  class="w-full border border-gray-300 rounded-md px-2 py-1 text-sm focus:ring-1 focus:ring-red-500"
+                >
+                  <option>0</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
+              </div>
+              <div
+                class="p-3 bg-white border border-red-200 rounded-lg shadow-sm"
+              >
+                <div class="font-bold text-gray-800 mb-1">
+                  <span class="text-red-600 mr-1">📍</span>Tỉnh 1
+                </div>
+                <p>
+                  Cần:
+                  <strong
+                    id="province2-numCase-replacement"
+                    class="text-red-600"
+                  ></strong>
+                  liều
+                </p>
+                <p>
+                  Dân:
+                  <strong
+                    id="province2-population-replacement"
+                    class="text-red-600"
+                  ></strong>
+                </p>
+                <label class="block text-xs mt-2">Phân phối:</label>
+                <input
+                  type="number"
+                  id="province2-numLocalVaccine"
+                  class="w-full border border-gray-300 rounded-md px-2 py-1 text-sm focus:ring-1 focus:ring-red-500"
+                />
+                <label class="block text-xs mt-2">Cách ly:</label>
+                <select
+                  id="province2-lockdownLevel"
+                  class="w-full border border-gray-300 rounded-md px-2 py-1 text-sm focus:ring-1 focus:ring-red-500"
+                >
+                  <option>0</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
+              </div>
+              <div
+                class="p-3 bg-white border border-red-200 rounded-lg shadow-sm"
+              >
+                <div class="font-bold text-gray-800 mb-1">
+                  <span class="text-red-600 mr-1">📍</span>Tỉnh 2
+                </div>
+                <p>
+                  Cần:
+                  <strong
+                    id="province3-numCase-replacement"
+                    class="text-red-600"
+                  ></strong>
+                  liều
+                </p>
+                <p>
+                  Dân:
+                  <strong
+                    id="province3-population-replacement"
+                    class="text-red-600"
+                  ></strong>
+                </p>
+                <label class="block text-xs mt-2">Phân phối:</label>
+                <input
+                  type="number"
+                  id="province3-numLocalVaccine"
+                  class="w-full border border-gray-300 rounded-md px-2 py-1 text-sm focus:ring-1 focus:ring-red-500"
+                />
+                <label class="block text-xs mt-2">Cách ly:</label>
+                <select
+                  id="province3-lockdownLevel"
+                  class="w-full border border-gray-300 rounded-md px-2 py-1 text-sm focus:ring-1 focus:ring-red-500"
+                >
+                  <option>0</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
+              </div>
+              <div
+                class="p-3 bg-white border border-red-200 rounded-lg shadow-sm"
+              >
+                <div class="font-bold text-gray-800 mb-1">
+                  <span class="text-red-600 mr-1">📍</span>Tỉnh 3
+                </div>
+                <p>
+                  Cần:
+                  <strong
+                    id="province4-numCase-replacement"
+                    class="text-red-600"
+                  ></strong>
+                  liều
+                </p>
+                <p>
+                  Dân:
+                  <strong
+                    id="province4-population-replacement"
+                    class="text-red-600"
+                  ></strong>
+                </p>
+                <label class="block text-xs mt-2">Phân phối:</label>
+                <input
+                  type="number"
+                  id="province4-numLocalVaccine"
+                  class="w-full border border-gray-300 rounded-md px-2 py-1 text-sm focus:ring-1 focus:ring-red-500"
+                />
+                <label class="block text-xs mt-2">Cách ly:</label>
+                <select
+                  id="province4-lockdownLevel"
+                  class="w-full border border-gray-300 rounded-md px-2 py-1 text-sm focus:ring-1 focus:ring-red-500"
+                >
+                  <option>0</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
+              </div>
+            </div>
+
+            <button
+              id="share-vaccine-btn"
+              class="mt-4 w-full bg-red-600 text-white font-bold py-2 rounded-lg hover:bg-red-700 transition transform hover:scale-[1.02]"
             >
-              Cấp độ cách ly:
-            </label>
-            <select
-              id="province1-lockdownLevel"
-              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition duration-150 ease-in-out text-gray-800"
-            >
-              <option value="0">Không cách ly</option>
-              <option value="1">Cấp 1</option>
-              <option value="2">Cấp 2</option>
-              <option value="3">Cấp 3 (cao nhất)</option>
-            </select>
+              PHÂN PHỐI
+            </button>
           </div>
 
-          <!--  -->
-          <div
-            class="p-4 bg-white rounded-xl border border-red-200 shadow-sm transition hover:shadow-md"
-          >
-            <div class="block font-bold text-gray-800 flex items-center mb-2">
-              <span class="text-xl mr-2 text-red-600">📍</span> Tỉnh 1
+          <!-- BIỂU ĐỒ -->
+          <div class="grid grid-rows-2 gap-3" id="chart-header">
+            <div class="bg-white border border-gray-200 rounded-lg shadow p-2">
+              <canvas id="total-chart" style="height: 220px"></canvas>
             </div>
-            <div class="text-sm text-gray-700">
-              <p>
-                Cần:
-                <strong
-                  id="province2-numCase-replacement"
-                  class="text-red-600"
-                ></strong>
-                liều.
-              </p>
-              <p>
-                Dân số:
-                <strong
-                  id="province2-population-replacement"
-                  class="text-red-600"
-                ></strong>
-                người.
-              </p>
+            <div class="bg-white border border-gray-200 rounded-lg shadow p-2">
+              <canvas id="local-chart" style="height: 220px"></canvas>
             </div>
-
-            <label
-              for="province2-numLocalVaccine"
-              class="block text-xs font-medium text-gray-600 mb-1 mt-3"
-            >
-              Số liều dự định phân phối:
-            </label>
-            <input
-              type="number"
-              id="province2-numLocalVaccine"
-              min="0"
-              value="0"
-              placeholder="Nhập số lượng"
-              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition duration-150 ease-in-out text-gray-800"
-            />
-
-            <label
-              for="province2-lockdownLevel"
-              class="block text-xs font-medium text-gray-600 mb-1 mt-3"
-            >
-              Cấp độ cách ly:
-            </label>
-            <select
-              id="province2-lockdownLevel"
-              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition duration-150 ease-in-out text-gray-800"
-            >
-              <option value="0">Không cách ly</option>
-              <option value="1">Cấp 1</option>
-              <option value="2">Cấp 2</option>
-              <option value="3">Cấp 3 (cao nhất)</option>
-            </select>
-          </div>
-
-          <!--  -->
-          <div
-            class="p-4 bg-white rounded-xl border border-red-200 shadow-sm transition hover:shadow-md"
-          >
-            <div class="block font-bold text-gray-800 flex items-center mb-2">
-              <span class="text-xl mr-2 text-red-600">📍</span> Tỉnh 2
-            </div>
-            <div class="text-sm text-gray-700">
-              <p>
-                Cần:
-                <strong
-                  id="province3-numCase-replacement"
-                  class="text-red-600"
-                ></strong>
-                liều.
-              </p>
-              <p>
-                Dân số:
-                <strong
-                  id="province3-population-replacement"
-                  class="text-red-600"
-                ></strong>
-                người.
-              </p>
-            </div>
-
-            <label
-              for="province3-numLocalVaccine"
-              class="block text-xs font-medium text-gray-600 mb-1 mt-3"
-            >
-              Số liều dự định phân phối:
-            </label>
-            <input
-              type="number"
-              id="province3-numLocalVaccine"
-              min="0"
-              value="0"
-              placeholder="Nhập số lượng"
-              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition duration-150 ease-in-out text-gray-800"
-            />
-
-            <label
-              for="province3-lockdownLevel"
-              class="block text-xs font-medium text-gray-600 mb-1 mt-3"
-            >
-              Cấp độ cách ly:
-            </label>
-            <select
-              id="province3-lockdownLevel"
-              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition duration-150 ease-in-out text-gray-800"
-            >
-              <option value="0">Không cách ly</option>
-              <option value="1">Cấp 1</option>
-              <option value="2">Cấp 2</option>
-              <option value="3">Cấp 3 (cao nhất)</option>
-            </select>
-          </div>
-
-          <!--  -->
-          <div
-            class="p-4 bg-white rounded-xl border border-red-200 shadow-sm transition hover:shadow-md"
-          >
-            <div class="block font-bold text-gray-800 flex items-center mb-2">
-              <span class="text-xl mr-2 text-red-600">📍</span> Tỉnh 3
-            </div>
-            <div class="text-sm text-gray-700">
-              <p>
-                Cần:
-                <strong
-                  id="province4-numCase-replacement"
-                  class="text-red-600"
-                ></strong>
-                liều.
-              </p>
-              <p>
-                Dân số:
-                <strong
-                  id="province4-population-replacement"
-                  class="text-red-600"
-                ></strong>
-                người.
-              </p>
-            </div>
-
-            <label
-              for="province4-numLocalVaccine"
-              class="block text-xs font-medium text-gray-600 mb-1 mt-3"
-            >
-              Số liều dự định phân phối:
-            </label>
-            <input
-              type="number"
-              id="province4-numLocalVaccine"
-              min="0"
-              value="0"
-              placeholder="Nhập số lượng"
-              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition duration-150 ease-in-out text-gray-800"
-            />
-
-            <label
-              for="province4-lockdownLevel"
-              class="block text-xs font-medium text-gray-600 mb-1 mt-3"
-            >
-              Cấp độ cách ly:
-            </label>
-            <select
-              id="province4-lockdownLevel"
-              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition duration-150 ease-in-out text-gray-800"
-            >
-              <option value="0">Không cách ly</option>
-              <option value="1">Cấp 1</option>
-              <option value="2">Cấp 2</option>
-              <option value="3">Cấp 3 (cao nhất)</option>
-            </select>
-          </div>
-          <!--  -->
-        </div>
-
-        <div class="mt-6">
-          <button
-            id="share-vaccine-btn"
-            class="w-full bg-red-600 text-white text-lg font-bold p-3 rounded-xl shadow-md hover:bg-red-700 transition duration-200 ease-in-out transform hover:scale-[1.01] focus:outline-none focus:ring-4 focus:ring-red-300 focus:ring-opacity-50"
-          >
-            PHÂN PHỐI
-          </button>
-        </div>
-      </div>
-
-      <!-- CHART -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
-        <!--  -->
-        <div class="card bg-white">
-          <div style="position: relative; height: 400px">
-            <canvas id="total-chart"></canvas>
-          </div>
-        </div>
-
-        <!--  -->
-        <div class="card bg-white">
-          <div style="position: relative; height: 400px">
-            <canvas id="local-chart"></canvas>
           </div>
         </div>
       </div>
