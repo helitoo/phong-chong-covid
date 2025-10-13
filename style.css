@@ -69,22 +69,22 @@
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateX(30px);
+    transform: translateY(-30px); /* Bắt đầu từ trên */
   }
   to {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0); /* Dừng ở giữa */
   }
 }
 
 @keyframes fadeOut {
   from {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateY(0); /* Bắt đầu ở giữa */
   }
   to {
     opacity: 0;
-    transform: translateX(30px);
+    transform: translateY(-30px); /* Trượt ngược lên trên */
   }
 }
 

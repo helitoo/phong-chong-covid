@@ -184,9 +184,13 @@ function startCounttime(onStop) {
 }
 
 //
+const viewportWidth = window.innerWidth;
+
 function updateTurn(stopTimer) {
   let turnTime =
-    ((otherData.numHealth + otherData.credit) / 200) * 15 + randInt(0, 2);
+    ((otherData.numHealth + otherData.credit) / 200) *
+      (viewportWidth >= 768 ? 20 : 30) +
+    randInt(0, 2);
 
   if (turnTime < 1 || otherData.numHealth <= 5 || otherData.credit <= 5) {
     callToast("Bạn đã THẤT BẠI!", "danger");
@@ -203,7 +207,7 @@ function updateTurn(stopTimer) {
   // Process global vaccine
   otherData.numGlobalVaccine += Math.floor(17 - turnTime);
   otherData.globalVaccinePrice = Math.max(
-    Math.floor(30 / otherData.numGlobalVaccine),
+    Math.floor((viewportWidth >= 768 ? 20 : 30) / otherData.numGlobalVaccine),
     3
   );
 
@@ -267,5 +271,8 @@ document.addEventListener("DOMContentLoaded", () => {
   renderStatistics();
   addEventListeners();
   updateChart();
-  setTimeout(() => updateTurn(stopTimer), 20 * 1000);
+  setTimeout(
+    () => updateTurn(stopTimer),
+    (viewportWidth >= 768 ? 20 : 25) * 1000
+  );
 });

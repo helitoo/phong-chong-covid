@@ -43,7 +43,8 @@ export function callToast(message, type = "success") {
   // Tạo phần tử toast
   const toast = document.createElement("div");
   toast.className =
-    "flex items-center w-full max-w-xs p-4 mb-2 text-gray-500 bg-white rounded-lg shadow-sm dark:text-gray-400 dark:bg-gray-800 animate-fadeIn";
+    "flex items-center w-full max-w-xs p-4 mb-2 text-gray-500 bg-white rounded-lg shadow-xl dark:text-gray-400 dark:bg-gray-800 animate-fadeIn mx-auto";
+
   toast.innerHTML = `
     <div class="inline-flex items-center justify-center shrink-0 w-8 h-8 ${color} rounded-lg">
       <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">${svg}</svg>
@@ -67,8 +68,8 @@ export function callToast(message, type = "success") {
   // Tự động ẩn sau 4 giây
   setTimeout(() => {
     toast.classList.add("animate-fadeOut");
-    setTimeout(() => toast.remove(), 400);
-  }, 2500);
+    setTimeout(() => toast.remove(), 1000);
+  }, 3700);
 }
 
 //
