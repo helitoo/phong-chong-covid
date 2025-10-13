@@ -185,7 +185,8 @@ function startCounttime(onStop) {
 
 //
 function updateTurn(stopTimer) {
-  let turnTime = ((otherData.numHealth + otherData.credit) / 200) * 10;
+  let turnTime =
+    ((otherData.numHealth + otherData.credit) / 200) * 15 + randInt(0, 2);
 
   if (turnTime < 1 || otherData.numHealth <= 5 || otherData.credit <= 5) {
     callToast("Bạn đã THẤT BẠI!", "danger");
@@ -200,7 +201,7 @@ function updateTurn(stopTimer) {
   }
 
   // Process global vaccine
-  otherData.numGlobalVaccine += Math.floor(10 - turnTime);
+  otherData.numGlobalVaccine += Math.floor(17 - turnTime);
   otherData.globalVaccinePrice = Math.max(
     Math.floor(30 / otherData.numGlobalVaccine),
     3
@@ -261,16 +262,10 @@ function updateTurn(stopTimer) {
 //
 document.addEventListener("DOMContentLoaded", () => {
   const stopTimer = startCounttime();
-
   setUpData();
-
   updateSumData();
-
   renderStatistics();
-
   addEventListeners();
-
   updateChart();
-
-  setTimeout(() => updateTurn(stopTimer), 5 * 1000);
+  setTimeout(() => updateTurn(stopTimer), 20 * 1000);
 });
