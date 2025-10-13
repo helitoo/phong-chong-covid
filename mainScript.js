@@ -192,7 +192,7 @@ function updateTurn(stopTimer) {
       (viewportWidth >= 768 ? 20 : 30) +
     randInt(2, 5);
 
-  if (turnTime < 1 || otherData.numHealth <= 5 || otherData.credit <= 5) {
+  if (turnTime < 1 || otherData.numHealth <= 2 || otherData.credit <= 2) {
     callToast("Bạn đã THẤT BẠI!", "danger");
     stopTimer();
     return;
@@ -202,6 +202,10 @@ function updateTurn(stopTimer) {
     callToast("CHIẾN THẮNG");
     stopTimer();
     return;
+  }
+
+  if (turnTime <= 5 || otherData.numHealth <= 10 || otherData.credit <= 10) {
+    callToast("CẢNH BÁO SẮP THẤT BẠI!", "danger");
   }
 
   // Process global vaccine
