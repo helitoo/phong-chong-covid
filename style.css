@@ -1,30 +1,18 @@
-/* === Card === */
-.card {
-  background-color: #ffffff;
-  padding: 1.5rem;
-  border-radius: 0.75rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  transition: all 0.2s ease-in-out;
-  border: 1px solid #f3f4f6;
+/* Button */
+button {
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
 }
 
-/* === Input === */
-.input-style {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.5rem;
-  transition: all 0.2s ease-in-out;
+button:hover {
+  transform: translateY(-5px);
 }
 
-.input-style:focus {
-  outline: none;
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+button:active {
+  transform: scale(0.95);
 }
 
-/* === Stat Group === */
+/* Stat group */
 .stat-group {
   padding: 0.2rem;
   transition: all 0.2s ease-in-out;
@@ -33,36 +21,6 @@
   border-left-width: 4px;
   border-left-style: solid;
   border-left-color: #e5e7eb;
-}
-
-/* === Custom Scrollbar === */
-#province-distribution::-webkit-scrollbar {
-  width: 8px;
-}
-
-#province-distribution::-webkit-scrollbar-thumb {
-  background: #9ca3af;
-  border-radius: 4px;
-}
-
-#province-distribution::-webkit-scrollbar-track {
-  background: #f3f4f6;
-}
-
-/* === Province Input Value Overlay === */
-.province-input-container {
-  position: relative;
-}
-
-.province-input-value {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-weight: bold;
-  color: #2563eb;
-  pointer-events: none;
-  padding-right: 5px;
 }
 
 /* Toast */
@@ -94,4 +52,16 @@
 
 .animate-fadeOut {
   animation: fadeOut 0.2s ease-in forwards;
+}
+
+/* Hide spin button */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }

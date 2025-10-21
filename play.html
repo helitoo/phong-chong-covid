@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BCĐ</title>
+    <!-- Tải Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <!-- Style -->
+    <link rel="stylesheet" href="style.css" />
+    <!-- Main script -->
+    <script type="module" src="./mainScript.js"></script>
+    <script>
+      // Cấu hình Tailwind cho màu sắc chủ đạo
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style></style>
+  </head>
+  <body class="bg-gray-100 min-h-screen font-sans">
+    <!-- Toast -->
+    <div
+      id="toast-container"
+      class="fixed top-4 left-1/2 -translate-x-1/2 z-[9999] space-y-2"
+    ></div>
+
+    <!-- Shortcuts  -->
+    <div class="fixed top-20 right-2 z-50 flex flex-col space-y-2 lg:hidden">
+      <button
+        class="bg-white/50 backdrop-blur-md p-2 border rounded-full shadow text-gray-600"
+      >
+        <a href="#mua-vaccine-header">💉</a>
+      </button>
+      <button
+        class="bg-white/50 backdrop-blur-md p-2 border rounded-full shadow text-gray-600"
+      >
+        <a href="#dau-tu-header">💰</a>
+      </button>
+      <button
+        class="bg-white/50 backdrop-blur-md p-2 border rounded-full shadow text-gray-600"
+      >
+        <a href="#phan-phoi-header">🗺️</a>
+      </button>
+      <button
+        class="bg-white/50 backdrop-blur-md p-2 border rounded-full shadow text-gray-600"
+      >
+        <a href="#chart-header">📈</a>
+      </button>
+    </div>
+
+    <!--  -->
+    <button
+      id="toggle-guidebook"
+      class="bg-white/50 backdrop-blur-md fixed top-2 right-2 z-50 p-2 bg-white border rounded-lg shadow text-gray-600"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        class="size-6"
+      >
+        <path
+          d="M11.25 4.533A9.707 9.707 0 0 0 6 3a9.735 9.735 0 0 0-3.25.555.75.75 0 0 0-.5.707v14.25a.75.75 0 0 0 1 .707A8.237 8.237 0 0 1 6 18.75c1.995 0 3.823.707 5.25 1.886V4.533ZM12.75 20.636A8.214 8.214 0 0 1 18 18.75c.966 0 1.89.166 2.75.47a.75.75 0 0 0 1-.708V4.262a.75.75 0 0 0-.5-.707A9.735 9.735 0 0 0 18 3a9.707 9.707 0 0 0-5.25 1.533v16.103Z"
+        />
+      </svg>
+    </button>
+
+    <div
+      id="guidebook-panel"
+      class="hidden fixed top-1/2 left-1/2 w-2/3 max-w-[90%] sm:w-2/3 w-full -translate-x-1/2 -translate-y-1/2 bg-white border border-gray-300 rounded-2xl shadow-2xl p-6 z-50 text-gray-800 transition-transform duration-300"
+    >
+      <button
+        id="close-guidebook"
+        class="absolute top-3 right-4 text-gray-600 hover:text-gray-900 text-xl font-bold"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="size-6"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z"
+            clip-rule="evenodd"
+          />
+        </svg>
+      </button>
+
+      <h2 class="text-xl font-semibold mb-4">📖 Hướng dẫn chơi</h2>
+
+      <ul class="text-base leading-relaxed">
+        <li class="flex items-start">
+          <span class="text-indigo-600 text-2xl mr-3 leading-none">✅</span>
+          <p>
+            Mục tiêu:
+            <strong class="text-indigo-800">
+              Thu thập, quản lý, phân phối vaccine và đầu tư hiệu quả để ngăn
+              chặn dịch bệnh.
+            </strong>
+          </p>
+        </li>
+        <li class="flex items-start">
+          <span class="text-red-600 text-2xl mr-3 leading-none">⚠️</span>
+          <p>
+            Ở mỗi lượt: Bạn có thể
+            <strong class="text-green-600">mua vaccine</strong>,
+            <strong class="text-red-600">phân phối vaccine</strong> và
+            <strong class="text-indigo-600">đầu tư</strong> theo ý muốn của
+            mình.
+          </p>
+        </li>
+        <li class="flex items-start">
+          <span class="text-blue-500 text-2xl mr-3 leading-none">⏱️</span>
+          <p>
+            Cập nhật dữ liệu: Ở một lượng thời gian được tính toán, dữ liệu sẽ
+            được cập nhật mới. Nhớ để ý
+            <strong class="text-red-700">thông báo khẩn cấp</strong> nhé!
+          </p>
+        </li>
+        <li class="flex items-start">
+          <span class="text-blue-500 text-2xl mr-3 leading-none">💡</span>
+          <p>
+            Tip: Hover chuột lên các chỉ số để xem các mẹo liên quan đến chỉ số
+            đó.
+          </p>
+        </li>
+      </ul>
+    </div>
+
+    <!-- VERTICAL SIDEBAR -->
+    <!--  -->
+    <button
+      id="toggle-sidebar"
+      class="bg-white/50 backdrop-blur-md fixed top-2 left-2 z-50 p-2 bg-white border rounded-lg shadow-md sm:hidden text-gray-600"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        class="size-6"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z"
+          clip-rule="evenodd"
+        />
+      </svg>
+    </button>
+
+    <aside
+      id="critical-stats-sidebar"
+      class="bg-white/50 backdrop-blur-md fixed top-0 left-0 w-32 h-full text-gray-800 z-40 pt-[60px] md:pt-0 border-r border-gray-200 transform -translate-x-full sm:translate-x-0 transition-transform duration-300 overflow-y-auto"
+    >
+      <div class="p-2 space-y-2">
+        <!--  -->
+        <div class="stat-group bg-stone-50 border-stone-500">
+          <span class="block text-xs text-gray-500">Thời gian</span>
+          <span class="text-stone-500">
+            <span id="time-replacement" class="font-semibold md:text-xl"></span>
+            phút</span
+          >
+        </div>
+
+        <!--  -->
+        <div class="stat-group bg-teal-50 border-emerald-500">
+          <span class="block text-xs text-emerald-500">Ngân Sách</span>
+          <span class="text-emerald-500"
+            ><span
+              id="cash-replacement"
+              class="font-semibold md:text-xl"
+            ></span>
+            đ</span
+          >
+        </div>
+
+        <!--  -->
+        <div class="stat-group bg-sky-50 border-sky-500">
+          <span class="block text-xs text-sky-500">Dự kiến tổng chi</span>
+          <span class="text-sky-500"
+            ><span
+              id="expectedCash-replacement"
+              class="font-semibold md:text-xl"
+              >0</span
+            >
+            đ</span
+          >
+        </div>
+
+        <!--  -->
+        <div class="stat-group bg-cyan-50 border-cyan-600">
+          <span class="block text-xs text-cyan-500">Vaccine hiện có</span>
+          <span class="text-cyan-600"
+            ><span
+              id="numLocalVaccine-replacement"
+              class="font-semibold md:text-xl"
+            ></span>
+            liều</span
+          >
+        </div>
+
+        <!--  -->
+        <div
+          class="stat-group bg-amber-50 border-amber-500"
+          title="Quyết định nhiều đến sự thành công của bạn"
+        >
+          <span class="block text-xs text-amber-500">Uy tín</span>
+          <span class="text-amber-500"
+            ><span
+              id="credit-replacement"
+              class="font-semibold md:text-xl"
+            ></span>
+            điểm</span
+          >
+        </div>
+
+        <!--  -->
+        <div
+          class="stat-group bg-purple-50 border-purple-600"
+          title="Điểm khoa học càng cao thì khả năng sáng chế vaccine hiệu quả càng lớn"
+        >
+          <span class="block text-xs text-purple-500">Khoa học</span>
+          <span class="text-purple-600"
+            ><span
+              id="science-replacement"
+              class="font-semibold md:text-xl"
+            ></span>
+            điểm</span
+          >
+        </div>
+
+        <!--  -->
+        <div
+          class="stat-group bg-yellow-50 border-yellow-600"
+          title="Điểm xã hội ảnh hưởng nhiều đến uy tín"
+        >
+          <span class="block text-xs text-yellow-500">Xã hội</span>
+          <span class="text-yellow-600"
+            ><span
+              id="social-replacement"
+              class="font-semibold md:text-xl"
+            ></span>
+            điểm</span
+          >
+        </div>
+
+        <!--  -->
+        <div class="stat-group bg-sky-50 border-sky-500">
+          <span class="block text-xs text-sky-500">Số dân khỏe mạnh</span>
+          <span class="text-sky-500"
+            ><span
+              id="numHealth-replacement"
+              class="font-semibold md:text-xl"
+            ></span>
+            ng</span
+          >
+        </div>
+
+        <!--  -->
+        <div class="stat-group bg-red-50 border-red-500">
+          <span class="block text-xs text-red-500">Ca Nhiễm</span>
+          <span class="text-red-500">
+            <span
+              id="numCase-replacement"
+              class="font-semibold md:text-xl"
+            ></span>
+            ng</span
+          >
+        </div>
+
+        <!--  -->
+        <div class="stat-group bg-slate-50 border-slate-500">
+          <span class="block text-xs text-slate-500">Tử vong</span>
+          <span class="text-slate-500"
+            ><span
+              id="numDeath-replacement"
+              class="font-semibold md:text-xl"
+            ></span>
+            ng</span
+          >
+        </div>
+
+        <!--  -->
+      </div>
+    </aside>
+
+    <div
+      class="ml-0 sm:ml-32 p-4 w-full sm:w-[calc(100%-8rem)] min-h-[calc(100vh-60px)] transition-all duration-300"
+    >
+      <div class="flex flex-col min-h-screen overflow-hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-none">
+          <!-- MUA VACCINE -->
+          <div
+            class="bg-gray-50 border border-gray-200 rounded-lg shadow p-2 flex flex-col justify-between"
+          >
+            <div>
+              <div class="flex items-center border-b border-blue-300">
+                <h3
+                  class="text-xl font-bold text-blue-800"
+                  id="mua-vaccine-header"
+                >
+                  Mua vaccine
+                </h3>
+                <span class="text-3xl ml-auto">💉</span>
+              </div>
+              <label class="text-sm font-medium text-gray-700 block"
+                >Số lượng mua (liều)</label
+              >
+              <div
+                class="flex items-center w-full border border-gray-300 rounded-md overflow-hidden"
+              >
+                <button
+                  type="button"
+                  class="px-2 bg-gray-100 text-gray-600"
+                  onclick="decrementValue(this)"
+                >
+                  −
+                </button>
+                <input
+                  type="number"
+                  id="purchase-vaccine"
+                  min="0"
+                  value="0"
+                  readonly
+                  class="w-full text-center p-1 text-base appearance-none"
+                />
+                <button
+                  type="button"
+                  class="px-2 bg-gray-100 text-gray-600"
+                  onclick="incrementValue(this)"
+                >
+                  +
+                </button>
+              </div>
+              <ul class="text-sm text-gray-700 flex justify-between">
+                <li>
+                  Giá: <strong id="globalVaccinePrice-replacement"></strong>đ /
+                  💉
+                </li>
+                <li>
+                  Thế giới hiện có:
+                  <strong id="numGlobalVaccine-replacement"></strong>💉
+                </li>
+              </ul>
+            </div>
+            <button
+              id="buy-vaccine-btn"
+              class="w-fit h-fit mx-auto bg-blue-600 text-white font-bold p-1 px-3 rounded-full"
+            >
+              MUA
+            </button>
+          </div>
+
+          <!-- ĐẦU TƯ -->
+          <div
+            class="p-2 lg:col-span-2 bg-gray-50 border border-gray-200 rounded-lg shadow flex flex-col justify-between"
+          >
+            <div>
+              <div class="flex items-center border-b border-purple-300">
+                <h3
+                  class="text-xl font-bold text-purple-800"
+                  id="dau-tu-header"
+                >
+                  Đầu tư
+                </h3>
+                <span class="text-3xl ml-auto">💰</span>
+              </div>
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label
+                    class="font-bold text-gray-800 text-sm flex items-center"
+                    ><span class="mr-2">🏛️</span> Xã hội</label
+                  >
+                  <div
+                    class="flex items-center w-full border border-gray-300 rounded-md overflow-hidden"
+                  >
+                    <button
+                      type="button"
+                      class="px-2 bg-gray-100 text-gray-600"
+                      onclick="decrementValue(this)"
+                    >
+                      −
+                    </button>
+                    <input
+                      type="number"
+                      id="social-investment"
+                      min="0"
+                      value="0"
+                      readonly
+                      class="w-full text-center p-1 text-base appearance-none"
+                    />
+                    <button
+                      type="button"
+                      class="px-2 bg-gray-100 text-gray-600"
+                      onclick="incrementValue(this)"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+                <div>
+                  <label
+                    class="font-bold text-gray-800 text-sm flex items-center"
+                    ><span class="mr-2">🧑‍🔬</span> Khoa học</label
+                  >
+                  <div
+                    class="flex items-center w-full border border-gray-300 rounded-md overflow-hidden"
+                  >
+                    <button
+                      type="button"
+                      class="px-2 bg-gray-100 text-gray-600"
+                      onclick="decrementValue(this)"
+                    >
+                      −
+                    </button>
+                    <input
+                      type="number"
+                      id="science-investment"
+                      min="0"
+                      value="0"
+                      readonly
+                      class="w-full text-center p-1 text-base appearance-none"
+                    />
+                    <button
+                      type="button"
+                      class="px-2 bg-gray-100 text-gray-600"
+                      onclick="incrementValue(this)"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button
+              id="invest-btn"
+              class="w-fit h-fit mx-auto bg-purple-600 text-white font-bold p-1 px-3 rounded-full"
+            >
+              ĐẦU TƯ
+            </button>
+          </div>
+        </div>
+
+        <!-- HÀNG 2: PHÂN PHỐI -->
+        <div
+          class="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-2 mt-1 overflow-hidden"
+        >
+          <!-- FORM PHÂN PHỐI -->
+          <div
+            class="bg-gray-50 border border-gray-200 rounded-lg shadow p-2 overflow-y-auto"
+          >
+            <div class="flex items-center border-b border-red-300">
+              <h3 class="text-xl font-bold text-red-800" id="phan-phoi-header">
+                Phân phối vaccine
+              </h3>
+              <span class="text-2xl ml-auto">🗺️</span>
+            </div>
+
+            <label class="text-sm font-medium text-gray-700 block"
+              >Giá bán mỗi vaccine</label
+            >
+            <input
+              type="number"
+              min="0"
+              value="0"
+              class="w-full p-1 border border-gray-300 rounded-md text-base font-semibold"
+            />
+
+            <div class="grid grid-cols-2 gap-2 text-sm mt-2">
+              <!-- Thủ đô -->
+              <div
+                class="p-2 bg-white border border-red-200 rounded-lg shadow-sm"
+              >
+                <div class="font-bold text-gray-800">
+                  <span class="text-red-600">📍</span>Thủ đô
+                </div>
+                <div class="flex justify-between">
+                  <div>
+                    Cần:
+                    <strong
+                      id="province1-numCase-replacement"
+                      class="text-red-600"
+                    ></strong>
+                    liều
+                  </div>
+                  <div>
+                    Dân:
+                    <strong
+                      id="province1-population-replacement"
+                      class="text-red-600"
+                    ></strong>
+                  </div>
+                </div>
+                <div class="flex gap-1 mt-1">
+                  <div class="w-1/2">
+                    <label>Phân phối:</label>
+                    <div
+                      class="flex items-center w-full border border-gray-300 rounded-md overflow-hidden"
+                    >
+                      <button
+                        type="button"
+                        class="px-2 bg-gray-100 text-gray-600"
+                        onclick="decrementValue(this)"
+                      >
+                        −
+                      </button>
+                      <input
+                        type="number"
+                        id="province1-numLocalVaccine"
+                        min="0"
+                        value="0"
+                        readonly
+                        class="w-full text-center p-1 text-base appearance-none"
+                      />
+                      <button
+                        type="button"
+                        class="px-2 bg-gray-100 text-gray-600"
+                        onclick="incrementValue(this)"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                  <div class="w-1/2">
+                    <label>Cách ly:</label>
+                    <select
+                      id="province1-lockdownLevel"
+                      class="w-full border border-gray-300 rounded-full p-1 text-sm"
+                    >
+                      <option>0</option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <!-- Tỉnh 1 -->
+              <div
+                class="p-2 bg-white border border-red-200 rounded-lg shadow-sm"
+              >
+                <div class="font-bold text-gray-800">
+                  <span class="text-red-600">📍</span>Tỉnh 1
+                </div>
+                <div class="flex justify-between">
+                  <div>
+                    Cần:
+                    <strong
+                      id="province2-numCase-replacement"
+                      class="text-red-600"
+                    ></strong>
+                    liều
+                  </div>
+                  <div>
+                    Dân:
+                    <strong
+                      id="province2-population-replacement"
+                      class="text-red-600"
+                    ></strong>
+                  </div>
+                </div>
+                <div class="flex gap-1 mt-1">
+                  <div class="w-1/2">
+                    <label>Phân phối:</label>
+                    <div
+                      class="flex items-center w-full border border-gray-300 rounded-md overflow-hidden"
+                    >
+                      <button
+                        type="button"
+                        class="px-2 bg-gray-100 text-gray-600"
+                        onclick="decrementValue(this)"
+                      >
+                        −
+                      </button>
+                      <input
+                        type="number"
+                        id="province2-numLocalVaccine"
+                        min="0"
+                        value="0"
+                        readonly
+                        class="w-full text-center p-1 text-base appearance-none"
+                      />
+                      <button
+                        type="button"
+                        class="px-2 bg-gray-100 text-gray-600"
+                        onclick="incrementValue(this)"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                  <div class="w-1/2">
+                    <label>Cách ly:</label>
+                    <select
+                      id="province2-lockdownLevel"
+                      class="w-full border border-gray-300 rounded-full p-1 text-sm"
+                    >
+                      <option>0</option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tỉnh 2 -->
+              <div
+                class="p-2 bg-white border border-red-200 rounded-lg shadow-sm"
+              >
+                <div class="font-bold text-gray-800">
+                  <span class="text-red-600">📍</span>Tỉnh 2
+                </div>
+                <div class="flex justify-between">
+                  <div>
+                    Cần:
+                    <strong
+                      id="province3-numCase-replacement"
+                      class="text-red-600"
+                    ></strong>
+                    liều
+                  </div>
+                  <div>
+                    Dân:
+                    <strong
+                      id="province3-population-replacement"
+                      class="text-red-600"
+                    ></strong>
+                  </div>
+                </div>
+                <div class="flex gap-1 mt-1">
+                  <div class="w-1/2">
+                    <label>Phân phối:</label>
+                    <div
+                      class="flex items-center w-full border border-gray-300 rounded-md overflow-hidden"
+                    >
+                      <button
+                        type="button"
+                        class="px-2 bg-gray-100 text-gray-600"
+                        onclick="decrementValue(this)"
+                      >
+                        −
+                      </button>
+                      <input
+                        type="number"
+                        id="province3-numLocalVaccine"
+                        min="0"
+                        value="0"
+                        readonly
+                        class="w-full text-center p-1 text-base appearance-none"
+                      />
+                      <button
+                        type="button"
+                        class="px-2 bg-gray-100 text-gray-600"
+                        onclick="incrementValue(this)"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                  <div class="w-1/2">
+                    <label>Cách ly:</label>
+                    <select
+                      id="province3-lockdownLevel"
+                      class="w-full border border-gray-300 rounded-full p-1 text-sm"
+                    >
+                      <option>0</option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tỉnh 3 -->
+              <div
+                class="p-2 bg-white border border-red-200 rounded-lg shadow-sm"
+              >
+                <div class="font-bold text-gray-800">
+                  <span class="text-red-600">📍</span>Tỉnh 3
+                </div>
+                <div class="flex justify-between">
+                  <div>
+                    Cần:
+                    <strong
+                      id="province4-numCase-replacement"
+                      class="text-red-600"
+                    ></strong>
+                    liều
+                  </div>
+                  <div>
+                    Dân:
+                    <strong
+                      id="province4-population-replacement"
+                      class="text-red-600"
+                    ></strong>
+                  </div>
+                </div>
+                <div class="flex gap-1 mt-1">
+                  <div class="w-1/2">
+                    <label>Phân phối:</label>
+                    <div
+                      class="flex items-center w-full border border-gray-300 rounded-md overflow-hidden"
+                    >
+                      <button
+                        type="button"
+                        class="px-2 bg-gray-100 text-gray-600"
+                        onclick="decrementValue(this)"
+                      >
+                        −
+                      </button>
+                      <input
+                        type="number"
+                        id="province4-numLocalVaccine"
+                        min="0"
+                        value="0"
+                        readonly
+                        class="w-full text-center p-1 text-base appearance-none"
+                      />
+                      <button
+                        type="button"
+                        class="px-2 bg-gray-100 text-gray-600"
+                        onclick="incrementValue(this)"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                  <div class="w-1/2">
+                    <label>Cách ly:</label>
+                    <select
+                      id="province4-lockdownLevel"
+                      class="w-full border border-gray-300 rounded-full p-1 text-sm"
+                    >
+                      <option>0</option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-center mt-2">
+              <button
+                id="share-vaccine-btn"
+                class="bg-red-600 text-white font-bold p-1 px-3 rounded-full"
+              >
+                PHÂN PHỐI
+              </button>
+            </div>
+          </div>
+
+          <!-- BIỂU ĐỒ -->
+          <div class="grid grid-rows-2 gap-1" id="chart-header">
+            <div
+              class="bg-white border border-gray-200 rounded-lg shadow position-relative overflow-hidden"
+            >
+              <canvas id="total-chart"></canvas>
+            </div>
+            <div
+              class="bg-white border border-gray-200 rounded-lg shadow position-relative overflow-hidden"
+            >
+              <canvas id="local-chart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      //
+      const toggleBtn = document.getElementById("toggle-sidebar");
+      const sidebar = document.getElementById("critical-stats-sidebar");
+      const navbar = document.getElementById("critical-stats-navbar");
+
+      toggleBtn.addEventListener("click", () => {
+        sidebar.classList.toggle("-translate-x-full");
+        navbar.classList.toggle("-translate-x-full");
+      });
+
+      //
+      const toggleGuideBook = document.getElementById("toggle-guidebook");
+      const guidebookPanel = document.getElementById("guidebook-panel");
+
+      toggleGuideBook.addEventListener("click", () => {
+        guidebookPanel.classList.toggle("hidden");
+      });
+
+      //
+      const closeBtn = document.getElementById("close-guidebook");
+      closeBtn.addEventListener("click", () => {
+        guidebookPanel.classList.add("hidden");
+      });
+
+      //
+      function incrementValue(btn) {
+        const input = btn.parentElement.querySelector('input[type="number"]');
+        const max = input.max ? parseFloat(input.max) : Infinity;
+        const current = parseFloat(input.value) || 0;
+        if (current < max) input.value = current + 1;
+      }
+
+      function decrementValue(btn) {
+        const input = btn.parentElement.querySelector('input[type="number"]');
+        const min = input.min ? parseFloat(input.min) : -Infinity;
+        const current = parseFloat(input.value) || 0;
+        if (current > min) input.value = current - 1;
+      }
+    </script>
+  </body>
+</html>
