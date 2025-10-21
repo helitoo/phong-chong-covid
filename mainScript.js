@@ -275,8 +275,8 @@ document.addEventListener("DOMContentLoaded", () => {
   renderStatistics();
   addEventListeners();
   updateChart();
-  setTimeout(
-    () => updateTurn(stopTimer),
-    (viewportWidth >= 768 ? 20 : 25) * 1000
-  );
+  // setTimeout(
+  //   () => updateTurn(stopTimer),
+  //   (viewportWidth >= 768 ? 20 : 25) * 1000
+  // );
 });

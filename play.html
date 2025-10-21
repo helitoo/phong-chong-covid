@@ -314,7 +314,7 @@
                 <span class="text-3xl ml-auto">💉</span>
               </div>
               <label class="text-sm font-medium text-gray-700 block"
-                >Số lượng mua (liều)</label
+                >Số lượng mua (liều):</label
               >
               <div
                 class="flex items-center w-full border border-gray-300 rounded-md overflow-hidden"
@@ -377,9 +377,8 @@
               </div>
               <div class="grid grid-cols-2 gap-3">
                 <div>
-                  <label
-                    class="font-bold text-gray-800 text-sm flex items-center"
-                    ><span class="mr-2">🏛️</span> Xã hội</label
+                  <label class="text-gray-800 text-sm flex items-center"
+                    ><span class="mr-2">🏛️</span>Đầu tư xã hội (đ):</label
                   >
                   <div
                     class="flex items-center w-full border border-gray-300 rounded-md overflow-hidden"
@@ -409,9 +408,8 @@
                   </div>
                 </div>
                 <div>
-                  <label
-                    class="font-bold text-gray-800 text-sm flex items-center"
-                    ><span class="mr-2">🧑‍🔬</span> Khoa học</label
+                  <label class="text-gray-800 text-sm flex items-center"
+                    ><span class="mr-2">🧑‍🔬</span>Đầu tư khoa học (đ):</label
                   >
                   <div
                     class="flex items-center w-full border border-gray-300 rounded-md overflow-hidden"
@@ -467,7 +465,7 @@
             </div>
 
             <label class="text-sm font-medium text-gray-700 block"
-              >Giá bán mỗi vaccine</label
+              >Giá bán mỗi vaccine:</label
             >
             <input
               type="number"
@@ -810,6 +808,7 @@
         const max = input.max ? parseFloat(input.max) : Infinity;
         const current = parseFloat(input.value) || 0;
         if (current < max) input.value = current + 1;
+        input.dispatchEvent(new Event("change"));
       }
 
       function decrementValue(btn) {
@@ -817,6 +816,7 @@
         const min = input.min ? parseFloat(input.min) : -Infinity;
         const current = parseFloat(input.value) || 0;
         if (current > min) input.value = current - 1;
+        input.dispatchEvent(new Event("change"));
       }
     </script>
   </body>
