@@ -34,8 +34,77 @@
       class="fixed top-4 left-1/2 -translate-x-1/2 z-[9999] space-y-2"
     ></div>
 
+    <!-- Overlay -->
+    <div
+      id="overlay"
+      class="z-999 hidden fixed inset-0 bg-white/40 backdrop-blur-sm z-40 transition-opacity duration-300"
+    >
+      <div
+        id="guidebook-panel"
+        class="z-1000 hidden fixed top-1/2 left-1/2 w-2/3 max-w-[90%] sm:w-2/3 w-full -translate-x-1/2 -translate-y-1/2 bg-white border border-gray-300 rounded-2xl shadow-2xl p-6 z-50 text-gray-800 transition-transform duration-300"
+      >
+        <button
+          id="close-guidebook"
+          class="absolute top-3 right-4 text-gray-600 hover:text-gray-900 text-xl font-bold"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            class="size-6"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </button>
+
+        <h2 class="text-xl font-semibold mb-4">📖 Hướng dẫn chơi</h2>
+
+        <ul class="text-base leading-relaxed">
+          <li class="flex items-start">
+            <span class="text-indigo-600 text-2xl mr-3 leading-none">✅</span>
+            <p>
+              Mục tiêu:
+              <strong class="text-indigo-800">
+                Thu thập, quản lý, phân phối vaccine và đầu tư hiệu quả để ngăn
+                chặn dịch bệnh.
+              </strong>
+            </p>
+          </li>
+          <li class="flex items-start">
+            <span class="text-red-600 text-2xl mr-3 leading-none">⚠️</span>
+            <p>
+              Ở mỗi lượt: Bạn có thể
+              <strong class="text-green-600">mua vaccine</strong>,
+              <strong class="text-red-600">phân phối vaccine</strong> và
+              <strong class="text-indigo-600">đầu tư</strong> theo ý muốn của
+              mình.
+            </p>
+          </li>
+          <li class="flex items-start">
+            <span class="text-blue-500 text-2xl mr-3 leading-none">⏱️</span>
+            <p>
+              Cập nhật dữ liệu: Ở một lượng thời gian được tính toán, dữ liệu sẽ
+              được cập nhật mới. Nhớ để ý
+              <strong class="text-red-700">thông báo khẩn cấp</strong> nhé!
+            </p>
+          </li>
+          <li class="flex items-start">
+            <span class="text-blue-500 text-2xl mr-3 leading-none">💡</span>
+            <p>
+              Tip: Hover chuột lên các chỉ số để xem các mẹo liên quan đến chỉ
+              số đó.
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
     <!-- Shortcuts  -->
-    <div class="fixed top-20 right-2 z-50 flex flex-col space-y-2 lg:hidden">
+    <div class="fixed top-20 right-2 z-1 flex flex-col space-y-2 lg:hidden">
       <button
         class="bg-white/50 backdrop-blur-md p-2 border rounded-full shadow text-gray-600"
       >
@@ -75,69 +144,6 @@
       </svg>
     </button>
 
-    <div
-      id="guidebook-panel"
-      class="hidden fixed top-1/2 left-1/2 w-2/3 max-w-[90%] sm:w-2/3 w-full -translate-x-1/2 -translate-y-1/2 bg-white border border-gray-300 rounded-2xl shadow-2xl p-6 z-50 text-gray-800 transition-transform duration-300"
-    >
-      <button
-        id="close-guidebook"
-        class="absolute top-3 right-4 text-gray-600 hover:text-gray-900 text-xl font-bold"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          class="size-6"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.72 6.97a.75.75 0 1 0-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06L12 13.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L13.06 12l1.72-1.72a.75.75 0 1 0-1.06-1.06L12 10.94l-1.72-1.72Z"
-            clip-rule="evenodd"
-          />
-        </svg>
-      </button>
-
-      <h2 class="text-xl font-semibold mb-4">📖 Hướng dẫn chơi</h2>
-
-      <ul class="text-base leading-relaxed">
-        <li class="flex items-start">
-          <span class="text-indigo-600 text-2xl mr-3 leading-none">✅</span>
-          <p>
-            Mục tiêu:
-            <strong class="text-indigo-800">
-              Thu thập, quản lý, phân phối vaccine và đầu tư hiệu quả để ngăn
-              chặn dịch bệnh.
-            </strong>
-          </p>
-        </li>
-        <li class="flex items-start">
-          <span class="text-red-600 text-2xl mr-3 leading-none">⚠️</span>
-          <p>
-            Ở mỗi lượt: Bạn có thể
-            <strong class="text-green-600">mua vaccine</strong>,
-            <strong class="text-red-600">phân phối vaccine</strong> và
-            <strong class="text-indigo-600">đầu tư</strong> theo ý muốn của
-            mình.
-          </p>
-        </li>
-        <li class="flex items-start">
-          <span class="text-blue-500 text-2xl mr-3 leading-none">⏱️</span>
-          <p>
-            Cập nhật dữ liệu: Ở một lượng thời gian được tính toán, dữ liệu sẽ
-            được cập nhật mới. Nhớ để ý
-            <strong class="text-red-700">thông báo khẩn cấp</strong> nhé!
-          </p>
-        </li>
-        <li class="flex items-start">
-          <span class="text-blue-500 text-2xl mr-3 leading-none">💡</span>
-          <p>
-            Tip: Hover chuột lên các chỉ số để xem các mẹo liên quan đến chỉ số
-            đó.
-          </p>
-        </li>
-      </ul>
-    </div>
-
     <!-- VERTICAL SIDEBAR -->
     <!--  -->
     <button
@@ -163,6 +169,12 @@
       class="bg-white/50 backdrop-blur-md fixed top-0 left-0 w-32 h-full text-gray-800 z-40 pt-[60px] md:pt-0 border-r border-gray-200 transform -translate-x-full sm:translate-x-0 transition-transform duration-300 overflow-y-auto"
     >
       <div class="p-2 space-y-2">
+        <div class="text-xs">
+          Trạng thái: <br />
+          <span id="playing-status" class="text-base font-semibold"
+            >Đang chơi</span
+          >.
+        </div>
         <!--  -->
         <div class="stat-group bg-stone-50 border-stone-500">
           <span class="block text-xs text-gray-500">Thời gian</span>
@@ -778,31 +790,52 @@
       </div>
     </div>
     <script>
-      //
+      // TOGGLE SIDEBAR
+
       const toggleBtn = document.getElementById("toggle-sidebar");
       const sidebar = document.getElementById("critical-stats-sidebar");
-      const navbar = document.getElementById("critical-stats-navbar");
 
       toggleBtn.addEventListener("click", () => {
         sidebar.classList.toggle("-translate-x-full");
-        navbar.classList.toggle("-translate-x-full");
       });
 
-      //
+      // GUIDEBOOK
+
       const toggleGuideBook = document.getElementById("toggle-guidebook");
       const guidebookPanel = document.getElementById("guidebook-panel");
-
-      toggleGuideBook.addEventListener("click", () => {
-        guidebookPanel.classList.toggle("hidden");
-      });
-
-      //
+      const overlay = document.getElementById("overlay");
       const closeBtn = document.getElementById("close-guidebook");
-      closeBtn.addEventListener("click", () => {
-        guidebookPanel.classList.add("hidden");
-      });
 
-      //
+      function toggleGuidebook() {
+        const isHidden = guidebookPanel.classList.contains("hidden");
+
+        if (isHidden) {
+          overlay.classList.remove("hidden");
+          guidebookPanel.classList.remove("hidden");
+
+          requestAnimationFrame(() => {
+            guidebookPanel.classList.remove("scale-95");
+            guidebookPanel.classList.add("scale-100");
+            overlay.style.opacity = "1";
+          });
+        } else {
+          guidebookPanel.classList.add("scale-95");
+          overlay.style.opacity = "0";
+
+          setTimeout(() => {
+            guidebookPanel.classList.add("hidden");
+            overlay.classList.add("hidden");
+          }, 200);
+        }
+      }
+
+      // Sự kiện
+      toggleGuideBook.addEventListener("click", toggleGuidebook);
+      closeBtn.addEventListener("click", toggleGuidebook);
+      overlay.addEventListener("click", toggleGuidebook);
+
+      // INPUT NUMBER
+
       function incrementValue(btn) {
         const input = btn.parentElement.querySelector('input[type="number"]');
         const max = input.max ? parseFloat(input.max) : Infinity;

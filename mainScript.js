@@ -19,6 +19,10 @@ function setUpData() {
     roundTo(50 / otherData.numGlobalVaccine, 0),
     1
   );
+
+  let playingStatus = document.getElementById("playing-status");
+  playingStatus.innerText = "Đang chơi";
+  playingStatus.classList.add("text-yellow-600");
 }
 
 //
@@ -194,12 +198,24 @@ function updateTurn(stopTimer) {
 
   if (turnTime < 1 || otherData.numHealth <= 2 || otherData.credit <= 2) {
     callToast("Bạn đã THẤT BẠI!", "danger");
+
+    let playingStatus = document.getElementById("playing-status");
+    playingStatus.innerText = "THẤT BẠI";
+    playingStatus.classList.remove("text-yellow-600");
+    playingStatus.classList.add("text-red-600");
+
     stopTimer();
     return;
   }
 
   if (otherData.numCase == 0) {
-    callToast("CHIẾN THẮNG");
+    callToast("THÀNH CÔNG");
+
+    let playingStatus = document.getElementById("playing-status");
+    playingStatus.innerText = "THÀNH CÔNG";
+    playingStatus.classList.remove("text-yellow-600");
+    playingStatus.classList.add("text-lime-600");
+
     stopTimer();
     return;
   }
@@ -209,7 +225,8 @@ function updateTurn(stopTimer) {
   }
 
   // Process global vaccine
-  otherData.numGlobalVaccine += Math.floor(17 - turnTime);
+  otherData.numGlobalVaccine +=
+    Math.max(Math.floor(17 - turnTime), 0) + randInt(0, 10);
   otherData.globalVaccinePrice = Math.max(
     Math.floor((viewportWidth >= 768 ? 20 : 30) / otherData.numGlobalVaccine),
     3
@@ -275,8 +292,8 @@ document.addEventListener("DOMContentLoaded", () => {
   renderStatistics();
   addEventListeners();
   updateChart();
-  // setTimeout(
-  //   () => updateTurn(stopTimer),
-  //   (viewportWidth >= 768 ? 20 : 25) * 1000
-  // );
+  setTimeout(
+    () => updateTurn(stopTimer),
+    (viewportWidth >= 768 ? 20 : 25) * 1000
+  );
 });
