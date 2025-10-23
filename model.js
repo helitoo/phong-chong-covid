@@ -1,3 +1,5 @@
+"use strict";
+
 export let provinceData = [
   {
     provinceId: "province1",
@@ -44,7 +46,7 @@ export let provinceData = [
 export let otherData = {
   cash: 100,
   credit: 70,
-  science: 30,
+  science: 50,
   social: 50,
   numLocalVaccine: 0,
   numGlobalVaccine: 10,
@@ -56,6 +58,7 @@ export let otherData = {
 
 export let otherDFData = {
   expectedCash: 0,
+  expectedNumLocalVaccine: 0,
   lastVaccineValue: 0,
   lastSocialValue: 0,
   lastScienceValue: 0,

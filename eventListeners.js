@@ -1,4 +1,6 @@
-import { callToast, roundTo } from "./helper.js";
+"use strict";
+
+import { callToast, randInt, roundTo } from "./helper.js";
 import { provinceData, otherData, otherDFData } from "./model.js";
 
 //
@@ -10,7 +12,7 @@ export function addConstraints() {
   otherDFData.expectedCash = parseInt(expectedCashReplacement.innerText) || 0;
 
   function checkConstraint(currValue, stdVal, msg = "Không đủ kinh phí!") {
-    if (currValue > stdVal) {
+    if (currValue > stdVal || currValue < 0) {
       callToast(msg, "warning");
       return false;
     }
@@ -18,6 +20,7 @@ export function addConstraints() {
   }
 
   //
+
   document
     .getElementById("purchase-vaccine")
     .addEventListener("change", (e) => {
@@ -77,7 +80,6 @@ export function addConstraints() {
     });
 
   //
-  let expectedNumLocalVaccine = 0;
 
   for (const province of provinceData) {
     //
@@ -89,12 +91,12 @@ export function addConstraints() {
 
         if (
           checkConstraint(
-            expectedNumLocalVaccine + diff,
+            otherDFData.expectedNumLocalVaccine + diff,
             otherData.numLocalVaccine,
             "Không đủ vaccine!"
           )
         ) {
-          expectedNumLocalVaccine += diff;
+          otherDFData.expectedNumLocalVaccine += diff;
           province.lastLocalVaccine = currValue;
         } else e.target.value = province.lastLocalVaccine;
       });
@@ -150,10 +152,11 @@ export function addActionEvent() {
 
     // Gift vaccines
 
-    let extraVaccine = Math.floor(
-      ((otherData.credit + 100 - otherData.numHealth) / 500) *
-        otherData.numGlobalVaccine
-    );
+    let extraVaccine =
+      Math.floor(
+        ((otherData.credit + 100 - otherData.numHealth) / 500) *
+          otherData.numGlobalVaccine
+      ) + randInt(0, 10);
 
     if (extraVaccine > 0)
       callToast(
@@ -174,10 +177,11 @@ export function addActionEvent() {
     let socialElm = document.getElementById("social-investment");
     let scienceElm = document.getElementById("science-investment");
 
-    // process extra science
+    // Extra science
 
-    let extraScience = Math.floor(
-      (otherData.credit / 100) * otherData.numGlobalVaccine
+    let extraScience = Math.max(
+      0,
+      Math.floor((otherData.credit / 100) * otherData.numGlobalVaccine)
     );
 
     if (extraScience > 0)
@@ -187,19 +191,21 @@ export function addActionEvent() {
 
     // Process social and science point
 
-    otherData.social += Math.floor(
-      (otherData.numHealth / 100) * parseInt(socialElm.value)
+    otherData.social += Math.max(
+      0,
+      Math.floor((otherData.numHealth / 100) * parseInt(socialElm.value))
     );
 
-    otherData.science += Math.floor(
-      (otherData.numHealth / 100) * parseInt(scienceElm.value)
+    otherData.science += Math.max(
+      0,
+      Math.floor((otherData.numHealth / 100) * parseInt(scienceElm.value))
     );
 
     document.getElementById("social-replacement").innerText = otherData.social;
     document.getElementById("science-replacement").innerText =
       otherData.science;
 
-    // Process cash
+    // Cash
 
     let cost = parseInt(socialElm.value) + parseInt(scienceElm.value);
 
@@ -223,10 +229,13 @@ export function addActionEvent() {
   document.getElementById("share-vaccine-btn").addEventListener("click", () => {
     for (const province of provinceData) {
       // Vaccine
+      otherDFData.expectedNumLocalVaccine = 0;
+      province.lastLocalVaccine = 0;
+
       let sharedVaccineInput = document.getElementById(
         `${province.provinceId}-numLocalVaccine`
       );
-      let sharedVaccine = parseInt(sharedVaccineInput.value);
+      let sharedVaccine = parseInt(sharedVaccineInput.value) || 0;
 
       province.numLocalVaccine += sharedVaccine;
 

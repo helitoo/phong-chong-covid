@@ -1,3 +1,5 @@
+"use strict";
+
 import {
   randInt,
   roundTo,
@@ -63,12 +65,14 @@ let localChart = null;
 
 function updateChart() {
   // Thêm dữ liệu mới vào lịch sử - lấy timestamp từ element
+
   const currentTime = parseFloat(
     document.getElementById("time-replacement").innerText
   );
   dataHistory.timestamps.push(currentTime);
 
   // Đẩy dữ liệu hiện tại từ otherData vào lịch sử
+
   dataHistory.cash.push(otherData.cash);
   dataHistory.credit.push(otherData.credit);
   dataHistory.science.push(otherData.science);
@@ -78,19 +82,20 @@ function updateChart() {
   dataHistory.numCase.push(otherData.numCase);
   dataHistory.numDeath.push(otherData.numDeath);
 
-  // Giới hạn số lượng điểm dữ liệu (ví dụ: 30 điểm gần nhất)
-  // const maxDataPoints = 30;
-  // if (dataHistory.timestamps.length > maxDataPoints) {
-  //   dataHistory.timestamps.shift();
-  //   dataHistory.cash.shift();
-  //   dataHistory.credit.shift();
-  //   dataHistory.science.shift();
-  //   dataHistory.social.shift();
-  //   dataHistory.numLocalVaccine.shift();
-  //   dataHistory.numHealth.shift();
-  //   dataHistory.numCase.shift();
-  //   dataHistory.numDeath.shift();
-  // }
+  // Giới hạn số lượng điểm dữ liệu hiển thị
+
+  const maxDataPoints = 30;
+  if (dataHistory.timestamps.length > maxDataPoints) {
+    dataHistory.timestamps.shift();
+    dataHistory.cash.shift();
+    dataHistory.credit.shift();
+    dataHistory.science.shift();
+    dataHistory.social.shift();
+    dataHistory.numLocalVaccine.shift();
+    dataHistory.numHealth.shift();
+    dataHistory.numCase.shift();
+    dataHistory.numDeath.shift();
+  }
 
   const totalData = [
     {
@@ -191,10 +196,15 @@ function startCounttime(onStop) {
 const viewportWidth = window.innerWidth;
 
 function updateTurn(stopTimer) {
+  // Turn time
   let turnTime =
     ((otherData.numHealth + otherData.credit) / 200) *
       (viewportWidth >= 768 ? 20 : 30) +
     randInt(2, 5);
+
+  // let turnTime = 2;
+
+  // Toast show
 
   if (turnTime < 1 || otherData.numHealth <= 2 || otherData.credit <= 2) {
     callToast("Bạn đã THẤT BẠI!", "danger");
@@ -220,13 +230,19 @@ function updateTurn(stopTimer) {
     return;
   }
 
-  if (turnTime <= 5 || otherData.numHealth <= 10 || otherData.credit <= 10) {
+  // if (turnTime <= 5 || otherData.numHealth <= 10 || otherData.credit <= 10) {
+  //   callToast("CẢNH BÁO SẮP THẤT BẠI!", "danger");
+  // }
+
+  if (otherData.numHealth <= 10 || otherData.credit <= 10) {
     callToast("CẢNH BÁO SẮP THẤT BẠI!", "danger");
   }
 
   // Process global vaccine
+
   otherData.numGlobalVaccine +=
     Math.max(Math.floor(17 - turnTime), 0) + randInt(0, 10);
+
   otherData.globalVaccinePrice = Math.max(
     Math.floor((viewportWidth >= 768 ? 20 : 30) / otherData.numGlobalVaccine),
     3
@@ -234,38 +250,61 @@ function updateTurn(stopTimer) {
 
   // Process province
 
+  let localVaccinePrice = Math.max(
+    0,
+    parseInt(document.getElementById("localVaccinePrice").value) || 0
+  );
+
+  let numLocalVaccine = 0;
+
   for (const province of provinceData) {
-    // Xác định số ca nhiễm mới (newCases)
+    // ⚙️ Tăng tốc độ lây nhiễm thêm 25% và vẫn giữ yếu tố ngẫu nhiên
+    const spreadRand = randInt(-5, 12); // tăng nhẹ biên độ ngẫu nhiên
+
     const newCases = Math.max(
       0,
       Math.floor(
-        ((((3.25 - province.lockdownLevel) / 3) * 30 +
-          ((100 - otherData.credit) / 100) * 30 +
-          (province.numHealth / 100) * 40) /
+        ((((3.25 - province.lockdownLevel) / 3) * 30 + // 25 → 31 (+25%)
+          ((100 - otherData.credit) / 100) * 30 + // 25 → 31
+          (province.numHealth / 100) * 39 + // 30 → 37
+          spreadRand) /
           100) *
           province.numHealth +
-          Math.random() * 2
+          Math.random() * 3
       )
     );
 
-    // Cập nhật dân khỏe mạnh -> bị nhiễm
-    province.numHealth -= newCases;
-    province.numCase += newCases;
+    province.numHealth = Math.max(0, province.numHealth - newCases);
+    province.numCase = Math.max(0, province.numCase + newCases);
 
-    // Số tử vong trong số ca nhiễm
-    const newDeaths = Math.floor(
-      ((200 - province.numHealth - otherData.science) / 300) * province.numCase
+    // ⚙️ Tăng tỷ lệ tử vong khoảng 25%
+    const deathFactor =
+      ((100 - (otherData.science + otherData.credit) / 2) / 100) *
+      (1 + (3 - province.lockdownLevel) * 0.3) * // 0.25 → 0.3
+      (1 + randInt(-8, 18) / 100); // tăng nhẹ độ dao động
+
+    const numDeaths = Math.max(
+      0,
+      Math.floor(province.numCase * deathFactor * 0.105) // 0.085 → 0.105 (+~25%)
     );
 
-    province.numDeath += newDeaths;
-    province.numCase -= newDeaths;
+    // ⚙️ Giảm hiệu quả hồi phục 25%
+    const recover = Math.floor(
+      Math.max(
+        0,
+        (otherData.science / 100) *
+          province.numCase *
+          0.525 * // 0.7 → 0.525 (−25%)
+          (1 + randInt(-8, 10) / 100)
+      )
+    );
 
-    // Constraint
-    if (province.numHealth < 0) province.numHealth = 0;
-    if (province.numCase < 0) province.numCase = 0;
-    if (province.numDeath < 0) province.numDeath = 0;
+    province.numCase = Math.max(0, province.numCase - numDeaths - recover);
+    province.numHealth = Math.max(0, province.numHealth + recover);
+    province.numDeath = Math.max(0, province.numDeath + numDeaths);
 
-    // Reset
+    // Vaccine reset
+    numLocalVaccine += province.numLocalVaccine;
     province.numLocalVaccine = 0;
   }
 
@@ -274,6 +313,17 @@ function updateTurn(stopTimer) {
   otherData.credit += Math.floor(
     (otherData.numHealth + otherData.social - 100) / 10
   );
+
+  otherData.cash +=
+    Math.max(
+      0,
+      Math.floor(
+        0.2 * otherData.credit +
+          0.3 * otherData.science +
+          (otherData.credit / 100) * localVaccinePrice * numLocalVaccine -
+          0.2 * otherData.social
+      )
+    ) + randInt(2, 10);
 
   renderStatistics();
 
@@ -296,4 +346,5 @@ document.addEventListener("DOMContentLoaded", () => {
     () => updateTurn(stopTimer),
     (viewportWidth >= 768 ? 20 : 25) * 1000
   );
+  // setTimeout(() => updateTurn(stopTimer), 2 * 1000);
 });
