@@ -220,38 +220,6 @@ function updateTurn(stopTimer) {
       (viewportWidth >= 768 ? 20 : 30) +
     randInt(2, 5);
 
-  // let turnTime = 2;
-
-  // Toast show
-
-  if (otherData.cash >= 200) {
-    callToast("Bạn đã THẤT BẠI vì bị tình nghi biển thủ công quỹ!", "danger");
-    lose();
-    return;
-  }
-
-  if (otherData.credit <= 5) {
-    callToast("Bạn đã THẤT BẠI vì không được lòng dân!", "danger");
-    lose();
-    return;
-  }
-
-  if (otherData.cash <= 5 || turnTime < 1 || otherData.numHealth <= 2) {
-    callToast("Đất nước đã SỤP ĐỔ!", "danger");
-    lose();
-    return;
-  }
-
-  if (otherData.numCase <= 5) {
-    callToast("THÀNH CÔNG!");
-    win();
-    return;
-  }
-
-  if (otherData.numHealth <= 10 || otherData.credit <= 10) {
-    callToast("CẢNH BÁO SẮP THẤT BẠI!", "danger");
-  }
-
   // Process global vaccine
 
   otherData.numGlobalVaccine +=
@@ -325,22 +293,45 @@ function updateTurn(stopTimer) {
     (otherData.numHealth + otherData.social - 100) / 10
   );
 
-  otherData.cash +=
-    Math.max(
-      0,
-      Math.floor(
-        0.2 * otherData.credit +
-          0.3 * otherData.science +
-          (otherData.credit / 100) * localVaccinePrice * numLocalVaccine -
-          0.2 * otherData.social
-      )
-    ) + randInt(2, 10);
+  otherData.cash += Math.max(
+    0,
+    Math.floor(
+      0.2 * otherData.credit +
+        0.3 * otherData.science +
+        (otherData.credit / 100) * localVaccinePrice * numLocalVaccine -
+        0.2 * otherData.social
+    ) + randInt(-10, 10)
+  );
 
   renderStatistics();
 
   updateChart();
 
   callToast("Dữ liệu đã thay đổi!", "warning");
+
+  if (otherData.cash >= 200) {
+    callToast("Bạn đã THẤT BẠI vì bị tình nghi biển thủ công quỹ!", "danger");
+    lose();
+    return;
+  }
+
+  if (otherData.credit <= 5) {
+    callToast("Bạn đã THẤT BẠI vì không được lòng dân!", "danger");
+    lose();
+    return;
+  }
+
+  if (otherData.cash <= 5 || turnTime < 1 || otherData.numHealth <= 2) {
+    callToast("Đất nước đã SỤP ĐỔ!", "danger");
+    lose();
+    return;
+  }
+
+  if (otherData.numCase <= 1) {
+    callToast("THÀNH CÔNG!");
+    win();
+    return;
+  }
 
   setTimeout(() => updateTurn(stopTimer), turnTime * 1000);
 }

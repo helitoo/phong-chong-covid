@@ -105,19 +105,25 @@ export function addConstraints() {
     document
       .getElementById(`${province.provinceId}-lockdownLevel`)
       .addEventListener("change", (e) => {
-        let currValue = parseInt(e.target.value) || 0;
+        const currValue = parseInt(e.target.value, 10);
+        const prevValue = province.lastLockDownLevel;
 
-        if (
-          checkConstraint(
-            currValue + 2 * currValue - 2 * province.lastLockDownLevel,
-            otherData.cash
-          )
-        ) {
-          otherDFData.expectedCash +=
-            2 * currValue - 2 * province.lastLockDownLevel;
-          expectedCashReplacement.textContent = otherDFData.expectedCash;
-          province.lastLockDownLevel = currValue;
-        } else e.target.value = province.lastLockDownLevel;
+        if (currValue === prevValue) return;
+
+        const delta = 2 * currValue - 2 * prevValue;
+
+        // Nếu cần thêm tiền (delta > 0) thì kiểm tra, nếu delta <= 0 (hoàn tiền) → cho qua
+        if (delta > 0) {
+          if (!checkConstraint(delta, otherData.cash)) {
+            e.target.value = prevValue;
+            return;
+          }
+        }
+
+        // Áp dụng thay đổi
+        otherDFData.expectedCash += delta;
+        expectedCashReplacement.textContent = otherDFData.expectedCash;
+        province.lastLockDownLevel = currValue;
       });
   }
 }
