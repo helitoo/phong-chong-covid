@@ -44,7 +44,7 @@ export let provinceData = [
 ];
 
 export let otherData = {
-  cash: 100,
+  cash: 150,
   credit: 70,
   science: 50,
   social: 50,

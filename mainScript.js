@@ -196,6 +196,24 @@ function startCounttime(onStop) {
 const viewportWidth = window.innerWidth;
 
 function updateTurn(stopTimer) {
+  function lose() {
+    let playingStatus = document.getElementById("playing-status");
+    playingStatus.innerText = "THẤT BẠI";
+    playingStatus.classList.remove("text-yellow-600");
+    playingStatus.classList.add("text-red-600");
+
+    stopTimer();
+  }
+
+  function win() {
+    let playingStatus = document.getElementById("playing-status");
+    playingStatus.innerText = "THÀNH CÔNG";
+    playingStatus.classList.remove("text-yellow-600");
+    playingStatus.classList.add("text-lime-600");
+
+    stopTimer();
+  }
+
   // Turn time
   let turnTime =
     ((otherData.numHealth + otherData.credit) / 200) *
@@ -206,33 +224,29 @@ function updateTurn(stopTimer) {
 
   // Toast show
 
-  if (turnTime < 1 || otherData.numHealth <= 2 || otherData.credit <= 2) {
-    callToast("Bạn đã THẤT BẠI!", "danger");
-
-    let playingStatus = document.getElementById("playing-status");
-    playingStatus.innerText = "THẤT BẠI";
-    playingStatus.classList.remove("text-yellow-600");
-    playingStatus.classList.add("text-red-600");
-
-    stopTimer();
+  if (otherData.cash >= 200) {
+    callToast("Bạn đã THẤT BẠI vì bị tình nghi biển thủ công quỹ!", "danger");
+    lose();
     return;
   }
 
-  if (otherData.numCase == 0) {
-    callToast("THÀNH CÔNG");
-
-    let playingStatus = document.getElementById("playing-status");
-    playingStatus.innerText = "THÀNH CÔNG";
-    playingStatus.classList.remove("text-yellow-600");
-    playingStatus.classList.add("text-lime-600");
-
-    stopTimer();
+  if (otherData.credit <= 5) {
+    callToast("Bạn đã THẤT BẠI vì không được lòng dân!", "danger");
+    lose();
     return;
   }
 
-  // if (turnTime <= 5 || otherData.numHealth <= 10 || otherData.credit <= 10) {
-  //   callToast("CẢNH BÁO SẮP THẤT BẠI!", "danger");
-  // }
+  if (otherData.cash <= 5 || turnTime < 1 || otherData.numHealth <= 2) {
+    callToast("Đất nước đã SỤP ĐỔ!", "danger");
+    lose();
+    return;
+  }
+
+  if (otherData.numCase <= 5) {
+    callToast("THÀNH CÔNG!");
+    win();
+    return;
+  }
 
   if (otherData.numHealth <= 10 || otherData.credit <= 10) {
     callToast("CẢNH BÁO SẮP THẤT BẠI!", "danger");
@@ -258,15 +272,14 @@ function updateTurn(stopTimer) {
   let numLocalVaccine = 0;
 
   for (const province of provinceData) {
-    // ⚙️ Tăng tốc độ lây nhiễm thêm 25% và vẫn giữ yếu tố ngẫu nhiên
-    const spreadRand = randInt(-5, 12); // tăng nhẹ biên độ ngẫu nhiên
+    const spreadRand = randInt(-5, 12);
 
     const newCases = Math.max(
       0,
       Math.floor(
-        ((((3.25 - province.lockdownLevel) / 3) * 30 + // 25 → 31 (+25%)
-          ((100 - otherData.credit) / 100) * 30 + // 25 → 31
-          (province.numHealth / 100) * 39 + // 30 → 37
+        ((((3.25 - province.lockdownLevel) / 3) * 30 +
+          ((100 - otherData.credit) / 100) * 30 +
+          (province.numHealth / 100) * 39 +
           spreadRand) /
           100) *
           province.numHealth +
@@ -277,24 +290,22 @@ function updateTurn(stopTimer) {
     province.numHealth = Math.max(0, province.numHealth - newCases);
     province.numCase = Math.max(0, province.numCase + newCases);
 
-    // ⚙️ Tăng tỷ lệ tử vong khoảng 25%
     const deathFactor =
       ((100 - (otherData.science + otherData.credit) / 2) / 100) *
-      (1 + (3 - province.lockdownLevel) * 0.3) * // 0.25 → 0.3
-      (1 + randInt(-8, 18) / 100); // tăng nhẹ độ dao động
+      (1 + (3 - province.lockdownLevel) * 0.3) *
+      (1 + randInt(-8, 18) / 100);
 
     const numDeaths = Math.max(
       0,
-      Math.floor(province.numCase * deathFactor * 0.105) // 0.085 → 0.105 (+~25%)
+      Math.floor(province.numCase * deathFactor * 0.105)
     );
 
-    // ⚙️ Giảm hiệu quả hồi phục 25%
     const recover = Math.floor(
       Math.max(
         0,
         (otherData.science / 100) *
           province.numCase *
-          0.525 * // 0.7 → 0.525 (−25%)
+          0.525 *
           (1 + randInt(-8, 10) / 100)
       )
     );

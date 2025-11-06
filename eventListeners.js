@@ -139,8 +139,6 @@ export function addActionEvent() {
     document.getElementById("numGlobalVaccine-replacement").innerText =
       otherData.numGlobalVaccine;
 
-    callToast(`Mua thành công ${numLocalVaccine} vaccine!`);
-
     // update cash
 
     let cost = numLocalVaccineInput.value * otherData.globalVaccinePrice;
@@ -159,9 +157,7 @@ export function addActionEvent() {
       ) + randInt(0, 10);
 
     if (extraVaccine > 0)
-      callToast(
-        `Chúc mừng bạn đã được quốc tế tài trợ thêm ${extraVaccine} vaccine!`
-      );
+      callToast(`Được quốc tế tài trợ thêm ${extraVaccine} vaccine!`);
 
     otherData.numLocalVaccine += numLocalVaccine + extraVaccine;
     numLocalVaccineInput.value = 0;
@@ -186,7 +182,7 @@ export function addActionEvent() {
 
     if (extraScience > 0)
       callToast(
-        `Chúc mừng bạn đã được quốc tế chuyển giao công nghệ chống dịch (${extraScience} điểm).`
+        `Được quốc tế chuyển giao công nghệ chống dịch (${extraScience} điểm).`
       );
 
     // Process social and science point
@@ -255,8 +251,6 @@ export function addActionEvent() {
         document.getElementById(`${province.provinceId}-lockdownLevel`).value
       );
     }
-
-    callToast("Đang phân phối vaccine tới các tỉnh!");
   });
 }
 
